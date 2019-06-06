@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Hashing\BcryptHasher;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,8 +13,13 @@
 */
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
+    $bcrypt = new BcryptHasher();
     return [
         'name' => $faker->name,
-        'email' => $faker->email,
+        'email' => $faker->email->unique(),
+        'userName' => $faker->userName->unique(),
+        'address' => $faker->address,
+        'name' => $faker->name,
+        'password' => $bcrypt->make('12345'),
     ];
 });

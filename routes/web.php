@@ -17,6 +17,10 @@ $router->get('/', function () use ($router) {
 $router->post('auth/login', [
     'uses' => 'AuthController@authenticate'
 ]);
+$router->post('signup', [
+    'uses' => 'AuthController@signup'
+]);
+
 $router->group(
     ['middleware' => 'auth'],
     function () use ($router) {

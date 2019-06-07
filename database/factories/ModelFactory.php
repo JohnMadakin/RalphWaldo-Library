@@ -12,14 +12,14 @@ use Illuminate\Hashing\BcryptHasher;
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     $bcrypt = new BcryptHasher();
     return [
         'name' => $faker->name,
-        'email' => $faker->email->unique(),
-        'userName' => $faker->userName->unique(),
+        'email' => $faker->email,
+        'userName' => $faker->userName,
         'address' => $faker->address,
         'name' => $faker->name,
-        'password' => $bcrypt->make('12345'),
+        'password' => $bcrypt->make('12345678'),
     ];
 });

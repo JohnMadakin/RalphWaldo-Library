@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Services;
-use App\User;
+use App\Models\User;
 
 class UserService {
   /**
@@ -29,6 +29,32 @@ class UserService {
   {
     if(is_int($id)){
       return User::find($id);
+    }
+    return false;
+  }
+
+  /**
+   * add a user to the users table .
+   * 
+   * @param  userName $userName
+   * @param email $email
+   * @param password $passwword
+   * @param address $address
+   * @return mixed
+   */
+  public function addUser( $userName, $email, $name, $password, $address, $roleId)
+  {
+    if (!empty($userName) && !empty($email) && !empty($name) && !empty($address) && !empty($password)) {
+      $user = User::create(
+        [
+          'userName' => $userName,
+          'email' => $email,
+          'name' => $name,
+          'password' => $password,
+          'address' => $address,
+        ]);
+        $user->roles()->attach($roleId);
+        return $user;
     }
     return false;
   }

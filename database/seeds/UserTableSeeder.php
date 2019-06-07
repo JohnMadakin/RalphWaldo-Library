@@ -10,6 +10,6 @@ class UserTableSeeder extends Seeder {
   public function run()
   {
     //creates 10 users
-    factory(App\User::class, 10)->create();
+    factory(App\Models\User::class, 10)->create();
   }
 }

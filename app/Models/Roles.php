@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Roles extends Model
 {
 
   /**
@@ -13,7 +13,7 @@ class Role extends Model
    * @var array
    */
   public function users(){
-    return $this->belongsToMany(User::class);
+    return $this->belongsToMany('App\Models\User');
   }
 
 }

@@ -29,5 +29,9 @@ $router->group(
             // $users = \App\User::all();
             // return response()->json($users);
         });
+        $router->post('items', [
+            'uses' => 'ItemsController@addItems'
+        ]);
+
     }
 );

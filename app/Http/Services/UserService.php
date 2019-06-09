@@ -2,6 +2,8 @@
 
 namespace App\Http\Services;
 use App\Models\User;
+use App\Role;
+
 
 class UserService {
   /**
@@ -29,6 +31,20 @@ class UserService {
   {
     if(is_int($id)){
       return User::find($id);
+    }
+    return false;
+  }
+
+  /**
+   * find user role by userid
+   * 
+   * @param  id $id
+   * @return mixed
+   */
+  public static function findUserRoleById($id)
+  {
+    if (is_int($id)) {
+      return User::find($id)->roles();
     }
     return false;
   }

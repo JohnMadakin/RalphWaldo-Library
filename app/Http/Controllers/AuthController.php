@@ -55,7 +55,7 @@ class AuthController extends BaseController {
       return response()->json([
         'success' => true,
         'token' => ControllerHelpers::generateJWT($userFound)
-      ], 200);
+      ], 201);
     }
     return response()->json([
       'success' => false,

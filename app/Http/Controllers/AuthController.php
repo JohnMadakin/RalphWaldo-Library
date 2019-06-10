@@ -35,8 +35,8 @@ class AuthController extends BaseController {
    */
   public function authenticate (){
     $this->validate($this->request, [
-      'email' => 'email|max:255',
-      'userName' => 'string|max:255',
+      'email' => 'sometimes|email|max:255',
+      'userName' => 'sometimes|string|max:255',
       'password' => 'required|min:5',
     ]);
     $email = $this->request->input('email');
@@ -69,7 +69,7 @@ class AuthController extends BaseController {
    * @param  \App\User   $user 
    * @return mixed
    */
-  public function signup (){
+  public function createNewUser (){
     $this->validate($this->request, [
       'email' => 'email|max:255',
       'userName' => 'string|max:255',

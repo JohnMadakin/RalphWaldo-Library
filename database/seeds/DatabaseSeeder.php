@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CategoryTableSeeder::class,
             ItemStateTableSeeder::class,
             ItemTypeTableSeeder::class,
+            ReturnItemReportTableSeeder::class
         ]);
         Model::reguard();
     }

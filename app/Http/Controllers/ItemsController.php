@@ -28,6 +28,15 @@ class ItemsController extends BaseController
     $this->request = $request;
   }
 
+   /**
+   * update an item to the collection
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return void
+   */
+  public function updateItems(){
+  }
+
   /**
    * Add an item to the collection
    *
@@ -66,7 +75,9 @@ class ItemsController extends BaseController
       if ($result) {
         return response()->json([
           'success' => true,
-          'itemId' => $result,
+          'data' => [
+            'itemId' => $result,
+          ],
           'message' => 'Item Added Successfully',
         ], 201);
       }
@@ -76,12 +87,10 @@ class ItemsController extends BaseController
       ], 400);
 
     }catch(Exception $ex){
-      var_dump($ex->getMessage());
-
       return response()->json([
         'success' => false,
-        'message' => 'Error Occured Adding Items'
-      ], 500);
+        'message' => 'Error Occured Adding Items. Ensure the IDs are Valid'
+      ], 400);
     }
   }
 }

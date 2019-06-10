@@ -63,6 +63,9 @@ $app->singleton(
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'authoriseToBorrow' => App\Http\Middleware\AuthoriseToBorrow::class,
+    'authoriseToAddItems' => App\Http\Middleware\AuthoriseToBorrow::class,
+    'authorise' => App\Http\Middleware\AccessAuthorization::class
 ]);
 
 /*

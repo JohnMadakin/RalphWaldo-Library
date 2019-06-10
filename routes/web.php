@@ -17,21 +17,34 @@ $router->get('/', function () use ($router) {
 $router->post('auth/login', [
     'uses' => 'AuthController@authenticate'
 ]);
-$router->post('signup', [
-    'uses' => 'AuthController@signup'
-]);
 
 $router->group(
-    ['middleware' => 'auth'],
+    ['middleware' => ['auth', 'authorise'] ],
     function () use ($router) {
-        $router->get('users', function () {
-            
-            // $users = \App\User::all();
-            // return response()->json($users);
-        });
+        // $router->get('users', function () {
+        //     // $users = \App\User::all();
+        //     // return response()->json($users);
+        // });
+        $router->post('users', [
+            'uses' => 'AuthController@createNewUser'
+        ]);
+
+    }
+);
+$router->group(
+    ['middleware' => ['auth', 'authorise'] ],
+    function () use ($router) {
         $router->post('items', [
             'uses' => 'ItemsController@addItems'
         ]);
+    }
+);
 
+$router->group(
+    ['middleware' => ['auth', 'authorise','authoriseToBorrow'] ],
+    function () use($router) {
+        $router->post('borrowers', [
+            'uses' => 'BorrowersController@borrowItems'
+        ]);
     }
 );

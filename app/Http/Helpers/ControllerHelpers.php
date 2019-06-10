@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Helpers;
 
+use App\Http\Services\UserService;
 use Illuminate\Hashing\BcryptHasher;
 use Firebase\JWT\JWT;
 
@@ -39,4 +40,19 @@ class ControllerHelpers {
     return $bcrypt->check($password, $hashPassword);
   }
 
+  /**
+   * check of items can be borrowed
+   * 
+   * @param  string   $password
+   * @return string
+   */
+
+  public static function checkUserRole($id)
+  {
+    $getRole = UserService:: findUserRoleById($id)->get();
+    if (count($getRole) > 0) { 
+      return $getRole[0]->role;
+    }
+    return false;
+  }
 }

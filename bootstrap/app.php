@@ -46,6 +46,7 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->register(Lanin\Laravel\ApiDebugger\ServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -99,5 +100,11 @@ $app->router->group([
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
+
+collect(scandir(__DIR__ . '/../config'))->each(function ($item) use ($app) {
+    $app->configure(basename($item, '.php'));
+});
+
+$app->configure('api-debugger');
 
 return $app;

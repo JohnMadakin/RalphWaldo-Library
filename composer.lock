@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d36fde105494503fc3645012edb00b9",
+    "content-hash": "3cc6ca07073365960566bf4a1e0e303e",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -4029,6 +4029,79 @@
                 "xunit"
             ],
             "time": "2019-05-28T11:59:40+00:00"
+        },
+        {
+            "name": "saad/api-debugger",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahmad-sa3d/api-debugger.git",
+                "reference": "639c802b67110309dfcf9205e1668a568b27fbee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahmad-sa3d/api-debugger/zipball/639c802b67110309dfcf9205e1668a568b27fbee",
+                "reference": "639c802b67110309dfcf9205e1668a568b27fbee",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.4.0",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "orchestra/testbench": ">=3.4.0",
+                "phpunit/phpunit": ">=5.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Lanin\\Laravel\\ApiDebugger\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Debugger": "Lanin\\Laravel\\ApiDebugger\\Support\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lanin\\Laravel\\ApiDebugger\\": "src/"
+                },
+                "files": [
+                    "src/Support/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxim Lanin",
+                    "email": "max@lanin.me",
+                    "homepage": "http://lanin.me"
+                },
+                {
+                    "name": "Ahmed Saad",
+                    "email": "a7mad.sa3d.2014@gmail.com",
+                    "homepage": "http://parent.eu"
+                }
+            ],
+            "description": "Easily debug your JSON API.",
+            "keywords": [
+                "api",
+                "debug",
+                "debugger",
+                "dump",
+                "framework",
+                "json",
+                "laravel",
+                "log",
+                "lumen",
+                "queries"
+            ],
+            "time": "2019-02-02T13:21:43+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

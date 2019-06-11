@@ -36,6 +36,15 @@ $router->group(
         $router->post('items', [
             'uses' => 'ItemsController@addItems'
         ]);
+        $router->get('items', [
+            'uses' => 'ItemsController@getItems'
+        ]);
+        $router->post('authors', [
+            'uses' => 'AuthorController@createNewAuthor'
+        ]);
+        $router->get('authors', [
+            'uses' => 'AuthorController@getAuthors'
+        ]);
     }
 );
 

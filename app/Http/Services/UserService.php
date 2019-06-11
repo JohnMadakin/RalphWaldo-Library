@@ -97,6 +97,7 @@ class UserService {
     }, function ($query) {
       return $query->orderBy('name');
     })->paginate($pageSize, ['*'], 'page', $page);
+    lad($users);
     return $users;
   }
 }

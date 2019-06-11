@@ -19,7 +19,6 @@ class BorrowerService {
    */
   public function borrowItems($borrowItems)
   {
-    // var_dump($borrowItems['items']);
     if ($borrowItems) {
       return DB::transaction(function () use ($borrowItems) {
         $borrowerSession = Borrower::create([

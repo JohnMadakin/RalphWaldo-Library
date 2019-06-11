@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Http\Services\ItemService;
-use App\Models\ItemStock;
+use App\Http\Helpers\ControllerHelpers;
 use Exception;
 
 class ItemsController extends BaseController
@@ -38,6 +38,49 @@ class ItemsController extends BaseController
   }
 
   /**
+   * get Items from the collection
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return void
+   */
+  public function getItems()
+  {
+    $pageSize = $this->request->query('pageSize') ?? 10;
+    $page = $this->request->query('page') ?? 1;
+    $sortBy = $this->request->query('sort') ?? 'title_asc';
+    $search = $this->request->has('search') ? $this->request->query('search') : null;
+    $filters = $this->request->all();
+    $allowedFields = ['title', 'author', 'isbn'];
+    $allowedOrder = ['asc', 'desc'];
+    $filterTerms = ['category', 'type', 'author'];
+    $sort = ControllerHelpers::deserializeSort($sortBy, $allowedFields, $allowedOrder);
+    $filterValues = ControllerHelpers:: extractFilterValuesFromParams($filters, $filterTerms);
+    if (!$sort) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Please enter a valid sort params'
+      ], 400);
+    }
+
+    $items = new ItemService();
+    try {
+      $result = $items->getItems($page, $pageSize, $search, $sort, $filters);
+      if ($result) {
+        return response()->json([
+          'success' => true,
+          'users' => $result
+        ], 200);
+      }
+    } catch (Exception $ex) {
+        return response()->json([
+          'success' => false,
+          'message' => 'your request could not be completed'
+        ], 400);
+    }
+
+  }
+
+  /**
    * Add an item to the collection
    *
    * @param  \Illuminate\Http\Request  $request
@@ -49,7 +92,7 @@ class ItemsController extends BaseController
       'title' => 'required|max:60',
       'description' => 'string|max:255',
       'isbn' => 'string',
-      'author' => 'required|max:60',
+      'authorId' => 'required|integer|min:1',
       'itemTypeId' => 'required|integer|min:1',
       'categoryId' => 'required|integer|min:1',
       'numberInStock' => 'required|integer|min:1',
@@ -60,7 +103,7 @@ class ItemsController extends BaseController
       'title' => $this->request->input('title'),
       'description' => $this->request->input('description'),
       'isbn' => $this->request->input('isbn'),
-      'author' =>  $this->request->input('author'),
+      'authorId' =>  $this->request->input( 'authorId'),
       'catId' => $this->request->input('categoryId'),
       'numOfItems' => $this->request->input('numberInStock'),
       'itemCondition' => $this->request->input('itemCondition'),

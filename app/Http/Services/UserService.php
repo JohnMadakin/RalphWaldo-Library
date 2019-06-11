@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 use App\Models\User;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 
 
 class UserService {
@@ -75,4 +76,27 @@ class UserService {
     return false;
   }
 
+  /**
+   * add a user to the users table .
+   * 
+   * @param  userName $userName
+   * @param email $email
+   * @param password $passwword
+   * @param address $address
+   * @return mixed
+   */
+  public function getAllUsers( $page, $pageSize, $search, $sortBy)
+  {
+      $users = DB::table('users')->select('name', 'userName', 'email', 'address', 'created_at as dateJoined')
+      ->when($search, function($query, $search){
+        return $query->where('name', 'ilike', '%'.$search.'%')
+          ->orWhere('email', 'ilike', '%' . $search . '%')
+        ->orWhere('userName', 'ilike', '%' . $search . '%');
+      })->when($sortBy, function ($query, $sortBy) {
+      return $query->orderBy($sortBy['column'], $sortBy['order']);
+    }, function ($query) {
+      return $query->orderBy('name');
+    })->paginate($pageSize, ['*'], 'page', $page);
+    return $users;
+  }
 }

@@ -21,12 +21,11 @@ $router->post('auth/login', [
 $router->group(
     ['middleware' => ['auth', 'authorise'] ],
     function () use ($router) {
-        // $router->get('users', function () {
-        //     // $users = \App\User::all();
-        //     // return response()->json($users);
-        // });
+        $router->get('users',[
+            'uses' => 'UserController@getUsers'
+        ]);
         $router->post('users', [
-            'uses' => 'AuthController@createNewUser'
+            'uses' => 'UserController@createNewUser'
         ]);
 
     }

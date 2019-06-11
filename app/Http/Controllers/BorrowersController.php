@@ -82,7 +82,6 @@ class BorrowersController extends BaseController
         'message' => 'could not borrow items'
       ], 400);
     } catch (Exception $ex) {
-      // var_dump($ex->getMessage());
       return response()->json([
         'success' => false,
         'message' => 'Error borrowing items. Ensure the IDs or ItemUniqueCode(s) are Valid'

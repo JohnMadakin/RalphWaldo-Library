@@ -3,12 +3,12 @@ namespace App\Http\Controllers;
 // use Firebase\JWT\ExpiredException;
 use illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
-use App\Http\Services\UserService;
+use App\Http\Services\AuthorService;
 use App\Http\Helpers\ControllerHelpers;
 use Exception;
 
 
-class UserController extends BaseController
+class AuthorController extends BaseController
 {
   /**
    * The request instance.
@@ -16,7 +16,6 @@ class UserController extends BaseController
    * @var \Illuminate\Http\Request
    */
   private $request;
-  private $userRole;
   /**
    * Create a new controller instance.
    *
@@ -31,45 +30,31 @@ class UserController extends BaseController
   /**
    * creates a new user
    * 
-   * @param  \App\User   $user 
+   * @param  \App\Author   $author 
    * @return mixed
    */
-  public function createNewUser()
+  public function createNewAuthor()
   {
     $this->validate($this->request, [
-      'email' => 'email|max:255',
-      'userName' => 'string|max:45',
-      'password' => 'required|min:8',
-      'firstName' => 'required|max:50',
-      'lastName' => 'required|max:50',
-      'address' => 'required|max:255'
+      'name' => 'required|string|max:100',
     ]);
-    $email = $this->request->input('email');
-    $userName = $this->request->input('userName');
-    $name = trim($this->request->input('firstName')) . ' ' . trim($this->request->input('lastName'));
-    $password = ControllerHelpers::hashPassword($this->request->input('password'));
-    $address = $this->request->input('address');
-    $user = new UserService();
-    $this->userRole = 4;
+    $name = trim($this->request->input('name'));
+    $author = new AuthorService();
     try {
-      $userDetail = $user->addUser(trim($userName), trim($email), $name, $password, $address, $this->userRole);
-      if ($userDetail) {
-        $userDetail['exp'] = time() + 60 * 60;
+      $authorDetail = $author->addAuthor($name);
+      if ( $authorDetail) {
         return response()->json([
           'success' => true,
-          'message' => 'New User Created'
+          'data' => ['id' => $authorDetail ],
+          'message' => 'New Author Created'
         ], 201);
       }
     } catch (Exception $ex) {
       return response()->json([
         'success' => false,
-        'message' => 'Email or Username Already in use'
+        'message' => 'Author already Exists'
       ], 400);
     }
-    return response()->json([
-      'success' => false,
-      'message' => 'New User could not be created'
-    ], 400);
   }
 
   /**
@@ -78,26 +63,26 @@ class UserController extends BaseController
    * @param  \App\User   $user 
    * @return mixed
    */
-  public function getUsers()
+  public function getAuthors()
   {
     $pageSize = $this->request->query('pageSize') ?? 10;
     $page = $this->request->query('page') ?? 1;
     $sortBy = $this->request->query('sort') ?? 'name_asc';
-    $search = $this->request->has('search') ? $this->request->query('search') : null;
-    $allowedFields = ['name', 'email', 'userName', 'dateJoined'];
-    $allowedOrder = ['asc','desc'];
+    $authorQuery = $this->request->has('author') ? $this->request->query('author') : null;
+    $allowedFields = ['name','dateAdded'];
+    $allowedOrder = ['asc', 'desc'];
 
     $sort = ControllerHelpers::deserializeSort($sortBy, $allowedFields, $allowedOrder);
-    if(!$sort) {
+    if (!$sort) {
       return response()->json([
         'success' => false,
         'message' => 'Please enter a valid sort params'
       ], 400);
     }
-    $users = new UserService();
+    $author = new AuthorService();
     try {
-      $result = $users->getAllUsers($page, $pageSize, $search, $sort);
-      if ( $result) {
+      $result = $author->getAuthors($page, $pageSize, $authorQuery, $sort);
+      if ($result) {
         return response()->json([
           'success' => true,
           'users' => $result
@@ -109,6 +94,5 @@ class UserController extends BaseController
         'message' => 'your request could not be completed'
       ], 400);
     }
-
   }
 }

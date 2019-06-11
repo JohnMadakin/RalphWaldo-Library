@@ -51,7 +51,7 @@ class AuthController extends BaseController {
       ], 400);
     }
     if(ControllerHelpers::verifyPassword($password, $userFound->password)) {
-      $userFound['exp'] = time() + 60*60;
+      $userFound['exp'] = time() + 60*60*24*7;
       return response()->json([
         'success' => true,
         'token' => ControllerHelpers::generateJWT($userFound)

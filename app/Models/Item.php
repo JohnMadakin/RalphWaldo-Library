@@ -30,5 +30,10 @@ class Item extends Model
     return $this->belongsTo('App\Models\ItemsType');
   }
 
+  public function author()
+  {
+    return $this->belongsTo('App\Models\Author');
+  }
+
 
 }

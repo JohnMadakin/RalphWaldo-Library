@@ -20,7 +20,8 @@ class CreateItemsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('isbn');
-            $table->string('author');
+            $table->integer('authorId')->unsigned();
+            $table->foreign( 'authorId')->references('id')->on('authors');
             $table->integer('itemTypeId')->unsigned();
             $table->foreign( 'itemTypeId')->references('id')->on('itemTypes');
             $table->integer('categoryId')->unsigned();

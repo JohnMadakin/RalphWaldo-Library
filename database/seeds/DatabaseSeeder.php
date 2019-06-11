@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleTableSeeder::class,
             UserTableSeeder::class,
+            AuthorTableSeeder::class,
             CategoryTableSeeder::class,
             ItemStateTableSeeder::class,
             ItemTypeTableSeeder::class,
-            ReturnItemReportTableSeeder::class
         ]);
         Model::reguard();
     }

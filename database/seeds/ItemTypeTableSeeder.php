@@ -18,25 +18,25 @@ class ItemTypeTableSeeder extends Seeder
 
         ItemsType::insert([
             [
-                'name' => 'Books',
+                'name' => 'books',
                 'updated_at' => $now,
                 'created_at' => $now,
             ],
             [
-                'name' => 'Audio CD',
+                'name' => 'audio cd',
                 'updated_at' => $now,
                 'created_at' => $now,
             ],
             [
-                'name' => 'DVD',
+                'name' => 'dvd',
                 'updated_at' => $now,
                 'created_at' => $now,
             ],[
-                'name' => 'Booklet',
+                'name' => 'booklet',
                 'updated_at' => $now,
                 'created_at' => $now,
             ],[
-                'name' => 'Magazine',
+                'name' => 'magazine',
                 'updated_at' => $now,
                 'created_at' => $now,
             ],

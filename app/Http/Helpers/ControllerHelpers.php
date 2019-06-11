@@ -4,6 +4,7 @@ namespace App\Http\Helpers;
 use App\Http\Services\UserService;
 use Illuminate\Hashing\BcryptHasher;
 use Firebase\JWT\JWT;
+use Mockery\Exception;
 
 class ControllerHelpers {
   /**
@@ -55,4 +56,34 @@ class ControllerHelpers {
     }
     return false;
   }
+
+  /**
+   * deserialize sorting data
+   * 
+   * @param  string sort
+   * @return string
+   */
+
+  public static function deserializeSort( $sortString)
+  {
+    try{
+      $allowedFields = ['name', 'email', 'userName', 'dateJoined'];
+      $allowedOrder = ['asc','desc'];
+      $checkForValidDelimeter = strpos($sortString, '_');
+      $splitString = explode('_', $sortString);
+      if(!in_array($splitString[0], $allowedFields) || !in_array($splitString[1], $allowedOrder)) {
+        return false;
+      }
+      if ($checkForValidDelimeter != false) {
+        $deserialiseValue = array(
+          'column' => $splitString[0],
+          'order' => $splitString[1],
+        );
+        return $deserialiseValue;
+      }
+    }catch(Exception $ex) {
+      return false;
+    }
+  }
+
 }

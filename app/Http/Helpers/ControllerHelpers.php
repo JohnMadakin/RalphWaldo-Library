@@ -58,6 +58,20 @@ class ControllerHelpers {
   }
 
   /**
+   * check that array is unique
+   * 
+   * @param  array   $array
+   * @return string
+   */
+
+  public static function checkArrayIsUnique($array)
+  {
+    $flattenItems = array_unique($array, SORT_REGULAR);;
+    return (count($array) !== count($flattenItems));
+  }
+
+
+  /**
    * deserialize sorting data
    * 
    * @param  string sort

@@ -95,4 +95,36 @@ class AuthorController extends BaseController
       ], 400);
     }
   }
+
+    /**
+   * Get all books by author
+   * 
+   * @param  \App\User   $user 
+   * @return mixed
+   */
+  public function getItemsByAuthor()
+  {
+    $id = $this->request->id;
+    $author = new AuthorService();
+    try {
+      $result = $author->getItemsByAuthorId($id);
+      if ($result) {
+        return response()->json([
+          'Success' => true,
+          'Items' => $result
+        ], 200);
+      }
+      return response()->json([
+          'Success' => false,
+          'message' => 'invalid Id'
+        ], 400);
+
+    } catch (Exception $ex) {
+      return response()->json([
+        'success' => false,
+        'message' => 'your request could not be completed'
+      ], 400);
+    }
+  }
+
 }

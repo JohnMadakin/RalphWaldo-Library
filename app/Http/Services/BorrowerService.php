@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\BorrowedItemsReport;
 use App\Models\BorrowedItem;
 use App\Models\Borrower;
 use Illuminate\Support\Carbon;
@@ -58,6 +57,28 @@ class BorrowerService {
   }
 
   /**
+   * Get items borrowed by user 
+   * 
+   * @param  \App\User   $user 
+   * @return mixed
+   */
+  public function getItemsBorrowedByuserId($id)
+  {
+    if($id){
+      $result = DB::table('borrowers')->select('borrowedItems.itemUniqueCode','borrowers.created_at as dateBorrowed', 'itemStocks.itemCondition', 'items.title','items.isbn', 'authors.name as author')
+      ->join('borrowedItems', 'borrowers.id', '=', 'borrowedItems.borrowerSessionId')
+      ->join('itemStocks', 'borrowedItems.itemUniqueCode', '=', 'itemStocks.itemUniqueCode')
+      ->join('items', 'itemStocks.itemId', '=', 'items.id')
+      ->join('authors', 'items.authorId', '=', 'authors.id')
+      ->where( 'borrowers.libraryCardId', $id)
+      ->get();
+      return $result;
+    }
+    return false;
+  }
+
+
+  /**
    * update an itemStocks to reflect item has been borrowed
    * 
    * @param Array $items 
@@ -84,7 +105,50 @@ class BorrowerService {
   {
     $dataToUpdate = BorrowerService:: updateItemStocksCode($items);
     $nonBorrowableItems = ItemStock::whereIn('itemUniqueCode', 
-    $dataToUpdate)->where('itemStateId', '<>', 4)->get();
+    $dataToUpdate)->where('itemStateId', '=', 4)
+    ->get();
     return $nonBorrowableItems;
   }
+
+  /**
+   * Ensure they are not the same item
+   * 
+   * @param Array $items 
+   * @return void
+   */
+  public static function checkIfSameItem($items)
+  {
+    $dataToUpdate = BorrowerService:: updateItemStocksCode($items);
+    $sameItems = ItemStock::whereIn('itemUniqueCode', 
+    $dataToUpdate)->groupBy('itemId')->get();
+    return $sameItems;
+  }
+
+  /**
+   * update borrowItems to reflect items have been returned
+   * 
+   * @param Array $items 
+   * @return void
+   */
+  public function returnItemsBorrowed($items)
+  {
+    if (is_array($items)) {
+      return DB::transaction(function () use ($items) {
+        foreach($items as $item){
+          BorrowedItem::where('itemUniqueCode', $item['itemUniqueCode'])->update([
+            'finesAccrued' => $item['finesAccrued'],
+            'returnStateId' => $item['returnStateId'],
+          ]);
+          ItemStock::where('itemUniqueCode', $item['itemUniqueCode'])->update([
+          'itemStateId' => $item['returnStateId'],
+        ]);
+        }
+        return true;
+      });
+    }
+    return false;
+  }
+
+
+
 }

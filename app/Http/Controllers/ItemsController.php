@@ -35,7 +35,118 @@ class ItemsController extends BaseController
    * @return void
    */
   public function updateItems(){
+    $this->validate($this->request, [
+      'title' => 'max:60',
+      'description' => 'string|max:255',
+      'isbn' => 'string',
+      'authorId' => 'integer|min:1',
+      'itemTypeId' => 'integer|min:1',
+      'categoryId' => 'integer|min:1',
+    ]);
+    $items = array(
+      'title' => $this->request->input('title'),
+      'description' => $this->request->input('description'),
+      'isbn' => $this->request->input('isbn'),
+      'authorId' =>  $this->request->input('authorId'),
+      'catId' => $this->request->input('categoryId'),
+      'itemTypeId' => $this->request->input('itemTypeId'),
+    );
+    $id = $this->request->id;
+    try {
+      $item = new ItemService();
+      $result = $item->updateItem($items, $id);
+      if ($result) {
+        return response()->json([
+          'success' => true,
+          'message' => 'Item Updated Successfully',
+        ], 200);
+      }
+      return response()->json([
+        'success' => false,
+        'message' => 'item could not be updated'
+      ], 400);
+    } catch (Exception $ex) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Error Occured updating Items. Ensure the IDs are Valid'
+      ], 400);
+    }
   }
+
+  /**
+   * Add an item to the stock
+   * @param  \Illuminate\Http\Request  $request
+   * @return void
+   */
+
+  public function addItemStock()
+  {
+    $this->validate($this->request, [
+      'itemCondition' => 'required|string',
+      'itemStateId' => 'required|integer|min:1',
+    ]);
+    $items = array(
+      'itemStateId' => $this->request->input('itemStateId'),
+      'itemCondition' => $this->request->input( 'itemCondition'),
+    );
+    $id = $this->request->id;
+    try {
+      $item = new ItemService();
+      $result = $item->addToItemStock($items, $id);
+
+      if ($result) {
+        return response()->json([
+          'success' => true,
+          'data' => [
+            'itemId' => $result,
+          ],
+          'message' => 'Item Added Successfully',
+        ], 201);
+      }
+      return response()->json([
+        'success' => false,
+        'message' => 'item could not be added'
+      ], 400);
+    } catch (Exception $ex) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Error Occured Adding Items. Ensure the IDs are Valid'
+      ], 400);
+    }
+  }
+
+  /**
+   * Add an item to the stock
+   * @param  \Illuminate\Http\Request  $request
+   * @return void
+   */
+
+  public function deleteItemsFromStock()
+  {
+    $id = $this->request->id;
+    try {
+      $item = new ItemService();
+      $result = $item-> deleteItemsFromStockById($id);
+      if ($result) {
+        var_dump('deleted');
+        return response()->json([
+          'success' => true,
+          'message' => 'Item Deleted Successfully',
+        ], 204);
+      }
+      return response()->json([
+        'success' => false,
+        'message' => 'item not found'
+      ], 400);
+    } catch (Exception $ex) {
+      var_dump($ex->getMessage());
+      return response()->json([
+        'success' => false,
+        'message' => 'Error Occured deleting Items. Ensure the IDs are Valid'
+      ], 400);
+    }
+  }
+
 
   /**
    * get Items from the collection

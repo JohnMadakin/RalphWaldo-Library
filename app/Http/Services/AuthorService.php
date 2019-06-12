@@ -41,4 +41,23 @@ class AuthorService
 
       return $result;
   }
+
+    /**
+   * get books by authors from the DB
+   * 
+   * @param string $author 
+   * @return void
+   */
+  public function getItemsByAuthorId($id)
+  {
+    if($id){
+      $result = DB::table('items')->select('title', 'description', 'isbn', 'numberInStock','items.created_at as dateAdded', 'authors.name as author')
+      ->join('authors', 'items.authorId', '=', 'authors.id')
+      ->when( $id, function ($query, $id) {
+        return $query->where( 'authors.id', $id);
+      })->get();
+      return $result;
+    }
+    return false;
+  }
 }

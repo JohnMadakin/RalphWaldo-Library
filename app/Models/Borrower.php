@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Borrower extends Model
 {
-  
+
   /**
    * The attributes that are not mass assignable.
    *
@@ -20,7 +20,7 @@ class Borrower extends Model
 
   public function borrowedItems()
   {
-    return $this->hasMany('App\Models\BorrowedItem');
+    return $this->hasMany('App\Models\BorrowedItem', 'borrowerSessionId');
   }
   public function user()
   {

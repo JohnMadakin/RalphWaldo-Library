@@ -15,12 +15,14 @@ class CreateBorrowedItemsTable extends Migration
     {
         Schema::create('borrowedItems', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('itemUniqueCode');
             $table->integer('borrowerSessionId')->unsigned();
             $table->foreign( 'borrowerSessionId')->references('id')->on( 'borrowers');
             $table->uuid('itemUniqueCode');
             $table->foreign('itemUniqueCode')->references('itemUniqueCode')->on('itemStocks');
             $table->integer('finesAccrued')->unsigned()->nullable();
-            $table->dateTime('dateReturned')->nullable();
+            $table->integer('returnStateId')->nullable();
+            $table->foreign('returnStateId')->references('id')->on('itemStates');
             $table->timestamps();
             $table->softDeletes();
         });

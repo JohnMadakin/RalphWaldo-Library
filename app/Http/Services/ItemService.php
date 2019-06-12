@@ -41,6 +41,72 @@ class ItemService
   }
 
   /**
+   * update an item in the DB 
+   * 
+   * @param Array $items 
+   * @return boolean
+   */
+  public function updateItem($items, $id)
+  {
+    if ($items) {
+        $item = DB::table('items')->where('id', $id)->update([
+          'title' => $items['title'],
+          'description' => $items['description'],
+          'isbn' => $items['isbn'],
+          'authorId' => $items['authorId'],
+          'itemTypeId' => $items['itemTypeId'],
+          'categoryId' => $items['catId'],
+        ]);
+        return $item;
+    }
+    return false;
+  }
+
+
+  /**
+   * update an item in the DB 
+   * 
+   * @param Array $items 
+   * @return boolean
+   */
+  public function deleteItemsFromStockById($id)
+  {
+    if ($id) {
+      $item = ItemStock::destroy($id);
+      DB::table('items')->where('id', $id)->decrement('numberInStock');
+
+      return $item;
+    }
+    return false;
+  }
+
+
+  /**
+   * add an item to itemStocks using itemId the DB 
+   * 
+   * @param Array $items 
+   * @return boolean
+   */
+  public function addToItemStock($items, $itemId)
+  {
+    if ($itemId) {
+      return DB::transaction(function () use ($items, $itemId) {
+        $item = ItemStock::create([
+          'itemId' => $itemId,
+          'itemCondition' => $items['itemCondition'],
+          'itemUniqueCode' => Uuid::uuid(),
+          'itemStateId' => $items[ 'itemStateId'],
+        ]);
+
+        DB::table('items')->where('id', $itemId)->increment('numberInStock');
+      return $item;
+      });
+    }
+    return false;
+  }
+
+
+  /**
    * get all users
    * 
    * @param integer $page 

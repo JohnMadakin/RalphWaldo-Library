@@ -17,4 +17,9 @@ class borrowedItem extends Model
   {
     return $this->belongsTo('App\Models\Borrower');
   }
+  public function items()
+  {
+      return $this->hasManyThrough('App\Models\Item', 'App\Models\ItemStock');
+  }
+
 }

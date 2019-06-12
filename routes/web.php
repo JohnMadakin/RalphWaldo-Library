@@ -33,17 +33,30 @@ $router->group(
 $router->group(
     ['middleware' => ['auth', 'authorise'] ],
     function () use ($router) {
+        $router->delete('items/{id}', [
+            'uses' => 'ItemsController@deleteItemsFromStock'
+        ]);
         $router->post('items', [
             'uses' => 'ItemsController@addItems'
         ]);
         $router->get('items', [
             'uses' => 'ItemsController@getItems'
         ]);
+        $router->post('items/{id}', [
+            'uses' => 'ItemsController@addItemStock'
+        ]);
+        $router->put('items/{id}', [
+            'uses' => 'ItemsController@updateItems'
+        ]);
+
         $router->post('authors', [
             'uses' => 'AuthorController@createNewAuthor'
         ]);
         $router->get('authors', [
             'uses' => 'AuthorController@getAuthors'
+        ]);
+        $router->get('authors/{id}/items', [
+            'uses' => 'AuthorController@getItemsByAuthor'
         ]);
     }
 );
@@ -54,5 +67,12 @@ $router->group(
         $router->post('borrowers', [
             'uses' => 'BorrowersController@borrowItems'
         ]);
+        $router->post('returns', [
+            'uses' => 'BorrowersController@returnItems'
+        ]);
+        $router->get('users/{id}/items', [
+            'uses' => 'BorrowersController@getItemsBorrowedByUser'
+        ]);
+
     }
 );

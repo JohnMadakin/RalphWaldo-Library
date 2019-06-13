@@ -16,7 +16,7 @@ class AuthTest extends TestCase
       'userName' => 'test1',
       'password' => 'password@1',
     ];
-    $this->json('POST', '/login', $this->user)
+    $this->json('POST', '/api/v1/login', $this->user)
       ->seeStatusCode(200)
       ->seeJsonStructure([
         'success',
@@ -31,7 +31,7 @@ class AuthTest extends TestCase
       'userName' => 'test10',
       'password' => 'password@1',
     ];
-    $this->json('POST', '/login', $this->user)
+    $this->json('POST', '/api/v1/login', $this->user)
       ->seeStatusCode(400)
       ->seeJson([
         'success' => false,
@@ -45,7 +45,7 @@ class AuthTest extends TestCase
       'userName' => 'test1',
       'password' => 'password@2',
     ];
-    $this->json('POST', '/login', $this->user)
+    $this->json('POST', '/api/v1/login', $this->user)
       ->seeStatusCode(400)
       ->seeJson([
         'success' => false,
@@ -70,13 +70,13 @@ class AuthTest extends TestCase
       'firstName' => 'test',
       'lastName' => 'test'
     ];
-    $response = $this->call('POST', '/login',[
+    $response = $this->call('POST', '/api/v1/login',[
       'userName' => 'test1',
       'password' => 'password@1',
     ]);    
     $responseArray = explode('"', $response->content());
     $this->token = $responseArray[5];
-    $this->json('POST', '/users', $params, ['Authorization' => $this->token])
+    $this->json('POST', '/api/v1/users', $params, ['Authorization' => $this->token])
       ->seeStatusCode(201)
       ->seeJson([
         'success' => true,
@@ -95,13 +95,13 @@ class AuthTest extends TestCase
       'firstName' => 'test',
       'lastName' => 'test'
     ];
-    $response = $this->call('POST', '/login', [
+    $response = $this->call('POST', '/api/v1/login', [
       'userName' => 'test1',
       'password' => 'password@1',
     ]);
     $responseArray = explode('"', $response->content());
     $this->token = $responseArray[5];
-    $this->json('POST', '/users', $params, ['Authorization' => $this->token])
+    $this->json('POST', '/api/v1/users', $params, ['Authorization' => $this->token])
       ->seeStatusCode(422)
       ->seeJson([
         'email' => [ "The email has already been taken."],
@@ -112,13 +112,13 @@ class AuthTest extends TestCase
 
   public function testShouldGetAllRegisteredUsers()
   {
-    $response = $this->call('POST', '/login', [
+    $response = $this->call('POST', '/api/v1/login', [
       'userName' => 'test1',
       'password' => 'password@1',
     ]);
     $responseArray = explode('"', $response->content());
     $this->token = $responseArray[5];
-    $this->json('GET', '/users', [], ['Authorization' => $this->token])
+    $this->json('GET', '/api/v1/users', [], ['Authorization' => $this->token])
       ->seeStatusCode(200)
       ->seeJson([
         'success' => true,
@@ -130,13 +130,13 @@ class AuthTest extends TestCase
 
   public function testShouldRequestForValidSortParams()
   {
-    $response = $this->call('POST', '/login', [
+    $response = $this->call('POST', '/api/v1/login', [
       'userName' => 'test1',
       'password' => 'password@1',
     ]);
     $responseArray = explode('"', $response->content());
     $this->token = $responseArray[5];
-    $this->json('GET', '/users?sort=lord', [], ['Authorization' => $this->token])
+    $this->json('GET', '/api/v1/users?sort=lord', [], ['Authorization' => $this->token])
       ->seeStatusCode(400)
       ->seeJson([
         'success' => false,
@@ -146,13 +146,13 @@ class AuthTest extends TestCase
 
   public function testShouldReturnSearchResultsForUsers()
   {
-    $response = $this->call('POST', '/login', [
+    $response = $this->call('POST', '/api/v1/login', [
       'userName' => 'test1',
       'password' => 'password@1',
     ]);
     $responseArray = explode('"', $response->content());
     $this->token = $responseArray[5];
-    $this->json('GET', '/users?search=test', [], ['Authorization' => $this->token])
+    $this->json('GET', '/api/v1/users?search=test', [], ['Authorization' => $this->token])
       ->seeStatusCode(200)
       ->seeJsonStructure([
         'success',
@@ -162,13 +162,13 @@ class AuthTest extends TestCase
 
   public function testShouldReturnPagenatedResultsForUsers()
   {
-    $response = $this->call('POST', '/login', [
+    $response = $this->call('POST', '/api/v1/login', [
       'userName' => 'test1',
       'password' => 'password@1',
     ]);
     $responseArray = explode('"', $response->content());
     $this->token = $responseArray[5];
-    $this->json('GET', '/users?page=1&pageSize=5', [], ['Authorization' => $this->token])
+    $this->json('GET', '/api/v1/users?page=1&pageSize=5', [], ['Authorization' => $this->token])
       ->seeStatusCode(200)
       ->seeJson([
         'success' => true,

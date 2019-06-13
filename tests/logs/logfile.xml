@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Application Test Suite" tests="10" assertions="35" errors="0" failures="0" skipped="0" time="12.719037">
-    <testsuite name="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" tests="9" assertions="32" errors="0" failures="0" skipped="0" time="11.390171">
-      <testcase name="testAdminShouldSignIn" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="13" assertions="3" time="2.194350"/>
-      <testcase name="testShouldNotSigninWithInvalidUsername" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="28" assertions="3" time="0.974272"/>
-      <testcase name="testShouldNotSigninWithInvalidPassword" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="42" assertions="3" time="1.119186"/>
-      <testcase name="testShouldCreateNewUser" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="63" assertions="4" time="1.226442"/>
-      <testcase name="testShouldNotCreateNewUserWithInvalidInputs" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="88" assertions="4" time="1.209967"/>
-      <testcase name="testShouldGetAllRegisteredUsers" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="113" assertions="5" time="1.165527"/>
-      <testcase name="testShouldRequestForValidSortParams" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="131" assertions="3" time="1.100619"/>
-      <testcase name="testShouldReturnSearchResultsForUsers" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="147" assertions="3" time="1.173902"/>
-      <testcase name="testShouldReturnPagenatedResultsForUsers" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="163" assertions="4" time="1.225906"/>
+  <testsuite name="tests" tests="15" assertions="54" errors="0" failures="0" skipped="0" time="23.005780">
+    <testsuite name="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" tests="9" assertions="32" errors="0" failures="0" skipped="0" time="14.213334">
+      <testcase name="testAdminShouldSignIn" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="13" assertions="3" time="3.449811"/>
+      <testcase name="testShouldNotSigninWithInvalidUsername" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="28" assertions="3" time="1.219276"/>
+      <testcase name="testShouldNotSigninWithInvalidPassword" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="42" assertions="3" time="1.315580"/>
+      <testcase name="testShouldCreateNewUser" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="63" assertions="4" time="1.385468"/>
+      <testcase name="testShouldNotCreateNewUserWithInvalidInputs" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="88" assertions="4" time="1.224879"/>
+      <testcase name="testShouldGetAllRegisteredUsers" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="113" assertions="5" time="1.712148"/>
+      <testcase name="testShouldRequestForValidSortParams" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="131" assertions="3" time="1.335966"/>
+      <testcase name="testShouldReturnSearchResultsForUsers" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="147" assertions="3" time="1.300189"/>
+      <testcase name="testShouldReturnPagenatedResultsForUsers" class="AuthTest" classname="AuthTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthTest.php" line="163" assertions="4" time="1.270017"/>
     </testsuite>
-    <testsuite name="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" tests="1" assertions="3" errors="0" failures="0" skipped="0" time="1.328866">
-      <testcase name="testShouldCreateNewAuthor" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="13" assertions="3" time="1.328866"/>
+    <testsuite name="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" tests="6" assertions="22" errors="0" failures="0" skipped="0" time="8.792446">
+      <testcase name="testShouldCreateNewAuthor" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="13" assertions="3" time="2.176767"/>
+      <testcase name="testShouldGetAllAuthors" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="31" assertions="6" time="1.442209"/>
+      <testcase name="testShouldGetAllAuthorsSortedInDescendingOrder" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="46" assertions="6" time="1.230844"/>
+      <testcase name="testShouldNotGetAuthorsWithInvalidSortParams" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="61" assertions="3" time="1.396558"/>
+      <testcase name="testShouldGetAuthorsWithWithPagination" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="76" assertions="2" time="1.239084"/>
+      <testcase name="testShouldGetItemsByAuthors" class="AuthorTest" classname="AuthorTest" file="/Users/edafeadjekeemunotor/Documents/laravel/RalphWaldo-Library/tests/integration/AuthorTest.php" line="91" assertions="2" time="1.306984"/>
     </testsuite>
   </testsuite>
 </testsuites>

@@ -28,7 +28,8 @@
         <log type="coverage-html" target="tests/logs/report" lowUpperBound="35"
             highLowerBound="70"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-        <log type="junit" target="/tmp/logfile.xml"/>
+        <log type="coverage-clover" target="tests/logs/clover.xml"/>
+        <log type="junit" target="tests/logs/logfile.xml"/>
         <log type="testdox-html" target="tests/logs/testdox.html"/>
         <log type="testdox-text" target="tests/logs/testdox.txt"/>
     </logging>

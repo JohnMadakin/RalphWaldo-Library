@@ -23,4 +23,13 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
     </php>
+
+    <logging>
+        <log type="coverage-html" target="tests/logs/report" lowUpperBound="35"
+            highLowerBound="70"/>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+        <log type="junit" target="/tmp/logfile.xml"/>
+        <log type="testdox-html" target="tests/logs/testdox.html"/>
+        <log type="testdox-text" target="tests/logs/testdox.txt"/>
+    </logging>
 </phpunit>

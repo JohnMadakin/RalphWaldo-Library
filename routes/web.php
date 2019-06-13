@@ -14,7 +14,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-$router->post('auth/login', [
+$router->post('login', [
     'uses' => 'AuthController@authenticate'
 ]);
 

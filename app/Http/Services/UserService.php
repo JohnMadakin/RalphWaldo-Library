@@ -61,19 +61,16 @@ class UserService {
    */
   public function addUser( $userName, $email, $name, $password, $address, $roleId)
   {
-    if (!empty($userName) && !empty($email) && !empty($name) && !empty($address) && !empty($password)) {
-      $user = User::create(
-        [
-          'userName' => $userName,
-          'email' => $email,
-          'name' => $name,
-          'password' => $password,
-          'address' => $address,
-        ]);
-        $user->roles()->attach($roleId);
-        return $user;
-    }
-    return false;
+    $user = User::create(
+      [
+        'userName' => $userName,
+        'email' => $email,
+        'name' => $name,
+        'password' => $password,
+        'address' => $address,
+      ]);
+      $user->roles()->attach($roleId);
+      return $user;
   }
 
   /**
@@ -97,7 +94,6 @@ class UserService {
     }, function ($query) {
       return $query->orderBy('name');
     })->paginate($pageSize, ['*'], 'page', $page);
-    lad($users);
     return $users;
   }
 }

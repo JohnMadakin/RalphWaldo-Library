@@ -85,7 +85,7 @@ class AuthorController extends BaseController
       if ($result) {
         return response()->json([
           'success' => true,
-          'users' => $result
+          'authors' => $result
         ], 200);
       }
     } catch (Exception $ex) {

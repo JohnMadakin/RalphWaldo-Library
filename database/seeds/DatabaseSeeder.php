@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             CategoryTableSeeder::class,
             ItemStateTableSeeder::class,
             ItemTypeTableSeeder::class,
-        ]);
+            ItemsTableSeeder::class     
+            ]);
         Model::reguard();
     }
 }

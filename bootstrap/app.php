@@ -100,9 +100,5 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
-collect(scandir(__DIR__ . '/../config'))->each(function ($item) use ($app) {
-    $app->configure(basename($item, '.php'));
-});
-
 
 return $app;

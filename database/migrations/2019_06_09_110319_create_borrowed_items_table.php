@@ -15,7 +15,6 @@ class CreateBorrowedItemsTable extends Migration
     {
         Schema::create('borrowedItems', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('itemUniqueCode');
             $table->integer('borrowerSessionId')->unsigned();
             $table->foreign( 'borrowerSessionId')->references('id')->on( 'borrowers');
             $table->uuid('itemUniqueCode');

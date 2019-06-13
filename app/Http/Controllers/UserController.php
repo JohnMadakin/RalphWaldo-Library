@@ -37,12 +37,12 @@ class UserController extends BaseController
   public function createNewUser()
   {
     $this->validate($this->request, [
-      'email' => 'email|max:255',
-      'userName' => 'string|max:45',
+      'email' => 'email|max:255|min:5|unique:users',
+      'userName' => 'string|min:4|max:45|unique:users',
       'password' => 'required|min:8',
-      'firstName' => 'required|max:50',
-      'lastName' => 'required|max:50',
-      'address' => 'required|max:255'
+      'firstName' => 'required|min:2|max:50',
+      'lastName' => 'required|min:2|max:50',
+      'address' => 'required|min:5|max:255'
     ]);
     $email = $this->request->input('email');
     $userName = $this->request->input('userName');
@@ -54,7 +54,6 @@ class UserController extends BaseController
     try {
       $userDetail = $user->addUser(trim($userName), trim($email), $name, $password, $address, $this->userRole);
       if ($userDetail) {
-        $userDetail['exp'] = time() + 60 * 60;
         return response()->json([
           'success' => true,
           'message' => 'New User Created'
@@ -63,13 +62,10 @@ class UserController extends BaseController
     } catch (Exception $ex) {
       return response()->json([
         'success' => false,
-        'message' => 'Email or Username Already in use'
+        'message' => 'New User could not be created'
       ], 400);
+
     }
-    return response()->json([
-      'success' => false,
-      'message' => 'New User could not be created'
-    ], 400);
   }
 
   /**

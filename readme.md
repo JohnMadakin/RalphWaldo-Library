@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/JohnMadakin/RalphWaldo-Library.svg?branch=develop)](https://travis-ci.com/JohnMadakin/RalphWaldo-Library)
 # Ralph Waldo Library
 
 Ralph Waldo Library written with PHP/Lumen

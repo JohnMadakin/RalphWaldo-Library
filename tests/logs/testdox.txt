@@ -1,0 +1,14 @@
+Auth
+ [x] Admin should sign in
+ [x] Should not signin with invalid username
+ [x] Should not signin with invalid password
+ [x] Should create new user
+ [x] Should not create new user with invalid inputs
+ [x] Should get all registered users
+ [x] Should request for valid sort params
+ [x] Should return search results for users
+ [x] Should return pagenated results for users
+
+Author
+ [x] Should create new author
+

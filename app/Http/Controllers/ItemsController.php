@@ -36,7 +36,7 @@ class ItemsController extends BaseController
    */
   public function updateItems(){
     $this->validate($this->request, [
-      'title' => 'max:60',
+      'title' => 'max:255',
       'description' => 'string|max:255',
       'isbn' => 'string',
       'authorId' => 'integer|min:1',
@@ -101,7 +101,7 @@ class ItemsController extends BaseController
             'itemId' => $result,
           ],
           'message' => 'Item Added Successfully',
-        ], 201);
+        ], 200);
       }
       return response()->json([
         'success' => false,
@@ -126,18 +126,14 @@ class ItemsController extends BaseController
     $id = $this->request->id;
     try {
       $item = new ItemService();
-      $result = $item-> deleteItemsFromStockById($id);
+      $result = $item->deleteItemsFromStockById($id);
       if ($result) {
-        var_dump('deleted');
-        return response()->json([
-          'success' => true,
-          'message' => 'Item Deleted Successfully',
-        ], 204);
+        return response()->json([], 204);
       }
       return response()->json([
         'success' => false,
         'message' => 'item not found'
-      ], 400);
+      ], 404);
     } catch (Exception $ex) {
       var_dump($ex->getMessage());
       return response()->json([
@@ -160,12 +156,9 @@ class ItemsController extends BaseController
     $page = $this->request->query('page') ?? 1;
     $sortBy = $this->request->query('sort') ?? 'title_asc';
     $search = $this->request->has('search') ? $this->request->query('search') : null;
-    $filters = $this->request->all();
     $allowedFields = ['title', 'author', 'isbn'];
     $allowedOrder = ['asc', 'desc'];
-    $filterTerms = ['category', 'type', 'author'];
     $sort = ControllerHelpers::deserializeSort($sortBy, $allowedFields, $allowedOrder);
-    $filterValues = ControllerHelpers:: extractFilterValuesFromParams($filters, $filterTerms);
     if (!$sort) {
       return response()->json([
         'success' => false,
@@ -175,11 +168,11 @@ class ItemsController extends BaseController
 
     $items = new ItemService();
     try {
-      $result = $items->getItems($page, $pageSize, $search, $sort, $filters);
+      $result = $items->getItems($page, $pageSize, $search, $sort);
       if ($result) {
         return response()->json([
           'success' => true,
-          'users' => $result
+          'items' => $result
         ], 200);
       }
     } catch (Exception $ex) {
@@ -200,7 +193,7 @@ class ItemsController extends BaseController
 
   public function addItems(){
     $this->validate($this->request, [
-      'title' => 'required|max:60',
+      'title' => 'required|max:255',
       'description' => 'string|max:255',
       'isbn' => 'string',
       'authorId' => 'required|integer|min:1',

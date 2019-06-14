@@ -103,4 +103,21 @@ class AuthorTest extends TestCase
       ]);
   }
 
+  public function testShouldRespondWith404WhenAuthorNotFound()
+  {
+    $response = $this->call('POST', '/api/v1/login', [
+      'userName' => 'test1',
+      'password' => 'password@1',
+    ]);
+    $token = json_decode($response->getContent())->token;
+
+    $this->json('GET', '/api/v1/authors/900/items', [], ['Authorization' => $token])
+      ->seeStatusCode(404)
+      ->seeJson([
+        'Success' => false,
+        'message' => 'Author not found'
+      ]);
+  }
+
+
 }

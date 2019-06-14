@@ -148,7 +148,4 @@ class BorrowerService {
     }
     return false;
   }
-
-
-
 }

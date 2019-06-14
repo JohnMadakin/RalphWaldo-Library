@@ -50,7 +50,8 @@ class AuthorService
    */
   public function getItemsByAuthorId($id)
   {
-    if($id){
+    $verifyAuthor = Author::find($id);
+    if($verifyAuthor){
       $result = DB::table('items')->select('title', 'description', 'isbn', 'numberInStock','items.created_at as dateAdded', 'authors.name as author')
       ->join('authors', 'items.authorId', '=', 'authors.id')
       ->when( $id, function ($query, $id) {

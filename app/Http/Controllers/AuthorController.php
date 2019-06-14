@@ -116,14 +116,14 @@ class AuthorController extends BaseController
       }
       return response()->json([
           'Success' => false,
-          'message' => 'invalid Id'
-        ], 400);
+          'message' => 'Author not found'
+        ], 404);
 
     } catch (Exception $ex) {
       return response()->json([
         'success' => false,
-        'message' => 'your request could not be completed'
-      ], 400);
+        'message' => 'your request could not be processed'
+      ], 500);
     }
   }
 

@@ -16,4 +16,20 @@ Author
  [x] Should not get authors with invalid sort params
  [x] Should get authors with with pagination
  [x] Should get items by authors
+ [x] Should respond with 404 when author not found
+
+Items
+ [x] Should create new item
+ [x] Should update item
+ [x] Should not add item if any of the required ids are wrong
+ [x] Should get all items
+ [x] Should get all items by title sorted in descending order
+ [x] Should get searched items
+ [x] Should filter items by category id
+ [x] Should not get items with invalid sort params
+ [x] Should get items with pagination
+ [x] Adding items to stock
+ [x] Should fail if item id is invalid
+ [x] Should delete items from stock
+ [x] Should fail to delete if item not found
 

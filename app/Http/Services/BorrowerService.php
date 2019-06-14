@@ -149,3 +149,11 @@ class BorrowerService {
     return false;
   }
 }
+{
+	"title": "As you like it",
+    "isbn": "123-42092-2312-9887",
+    "description": "yea",
+    "authorId": 2,
+    "itemTypeId": 2,
+    "categoryId": 1
+}

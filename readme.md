@@ -6,7 +6,7 @@ Ralph Waldo Library written with PHP/Lumen
 
 ## Official Documentation
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+Documentation for the application can be found on the [Here](https://documenter.getpostman.com/view/4919621/S1Zw6VRn).
 
 ## Security Vulnerabilities
 

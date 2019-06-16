@@ -31,7 +31,7 @@ class AuthorService
   public function getAuthors( $page, $pageSize, $author, $sortBy)
   {
 
-    $result = DB::table('authors')->select('name', 'created_at as dateAdded')
+    $result = DB::table('authors')->select('id','name', 'created_at as dateAdded')
       ->when( $author, function ($query, $author) {
         return $query->where( 'name', 'ilike', '%' . $author . '%')
             ->orWhere('id', $author);
@@ -52,7 +52,7 @@ class AuthorService
   {
     $verifyAuthor = Author::find($id);
     if($verifyAuthor){
-      $result = DB::table('items')->select('title', 'description', 'isbn', 'numberInStock','items.created_at as dateAdded', 'authors.name as author')
+      $result = DB::table('items')->select('items.id as itemId','title', 'description', 'isbn', 'numberInStock','items.created_at as dateAdded','authors.id as authorId', 'authors.name as author')
       ->join('authors', 'items.authorId', '=', 'authors.id')
       ->when( $id, function ($query, $id) {
         return $query->where( 'authors.id', $id);

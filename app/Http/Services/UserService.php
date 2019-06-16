@@ -84,7 +84,7 @@ class UserService {
    */
   public function getAllUsers( $page, $pageSize, $search, $sortBy)
   {
-      $users = DB::table('users')->select('name', 'userName', 'email', 'address', 'created_at as dateJoined')
+      $users = DB::table('users')->select('id', 'name', 'userName', 'email', 'address', 'created_at as dateJoined')
       ->when($search, function($query, $search){
         return $query->where('name', 'ilike', '%'.$search.'%')
           ->orWhere('email', 'ilike', '%' . $search . '%')

@@ -36,7 +36,7 @@ class ItemsController extends BaseController
    */
   public function updateItems(){
     $this->validate($this->request, [
-      'title' => 'max:255',
+      'title' => 'required|max:255',
       'description' => 'string|max:255',
       'isbn' => 'string',
       'authorId' => 'integer|min:1',
@@ -128,7 +128,10 @@ class ItemsController extends BaseController
       $item = new ItemService();
       $result = $item->deleteItemsFromStockById($id);
       if ($result) {
-        return response()->json([], 204);
+        return response()->json([
+          'success' => true,
+          'message' => 'Item Deleted'
+        ], 204);
       }
       return response()->json([
         'success' => false,

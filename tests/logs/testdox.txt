@@ -10,7 +10,7 @@ Auth
  [x] Should return pagenated results for users
 
 Author
- [x] Should create new author
+ [ ] Should create new author
  [x] Should get all authors
  [x] Should get all authors sorted in descending order
  [x] Should not get authors with invalid sort params

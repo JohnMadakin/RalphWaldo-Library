@@ -38,10 +38,10 @@ class UserController extends BaseController
   {
     $this->validate($this->request, [
       'email' => 'email|max:255|min:5|unique:users',
-      'userName' => 'string|min:4|max:45|unique:users',
+      'userName' => 'alpha_dash|min:4|max:45|unique:users',
       'password' => 'required|min:8',
-      'firstName' => 'required|min:2|max:50',
-      'lastName' => 'required|min:2|max:50',
+      'firstName' => 'required|alpha|min:2|max:50',
+      'lastName' => 'required|alpha|min:2|max:50',
       'address' => 'required|min:5|max:255'
     ]);
     $email = $this->request->input('email');

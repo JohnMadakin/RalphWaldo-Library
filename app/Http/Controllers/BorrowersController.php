@@ -144,7 +144,7 @@ class BorrowersController extends BaseController
     $this->validate($this->request, [
       'items' => 'required|array|min:1',
       'items.*.itemUniqueCode' => 'required|uuid',
-      'items.*.returnStateId' => 'required|integer|min:0',
+      'items.*.returnStateId' => 'required|integer|min:2',
       'items.*.finesAccrued' => 'required|min:0',
 
     ]);
@@ -153,24 +153,19 @@ class BorrowersController extends BaseController
     try{
       $borrowerService = new BorrowerService();
       $result = $borrowerService->returnItemsBorrowed($returnItems);
-      if (count($result) > 0) {
+      if (!$result) {
         return response()->json([
-          'Success' => true,
+          'success' => true,
+          'items' => $returnItems,
           'message' => 'Items returned successfully'
         ], 200);
       }
-      return response()->json([
-        'Success' => false,
-        'message' => "Items return unsuccessfully"
-      ], 404);
-
     } catch(Exception $ex) {
-      var_dump($ex->getMessage());
-        return response()->json([
-          'success' => false,
-          'message' => 'your request could not be completed'
-        ], 500);
-    }
+      return response()->json([
+        'success' => false,
+        'item' => json_decode($ex->getMessage()),
+        'message' => 'Invalid Borrowed item code. Ensure the code is correct and state is valid'
+      ], 400);    }
 
 
   }

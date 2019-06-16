@@ -123,7 +123,8 @@ class ItemService
 
   public function getItems($page, $pageSize, $search, $sortBy)
   {
-    $items = DB::table('items')->select('title', 'isbn', 'numberInStock as totalNumber', 'itemTypes.name as itemType', 'categories.name as itemCategory', 'authors.name as author', 'items.created_at as dateAdded')
+    $items = DB::table('items')->select('title', 'isbn', 'numberInStock as totalNumber', 'itemTypes.name as itemType', 'categories.name as itemCategory', 'itemStocks.itemUniqueCode as itemCode', 'authors.name as author', 'items.created_at as dateAdded')
+      ->join('itemStocks', 'items.id', '=', 'itemStocks.itemId')
       ->join('itemTypes', 'items.itemTypeId', '=', 'itemTypes.id')
       ->join('categories', 'items.categoryId', '=', 'categories.id')
       ->join('authors', 'items.authorId', '=', 'authors.id')

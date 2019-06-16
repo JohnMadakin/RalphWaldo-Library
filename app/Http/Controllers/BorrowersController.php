@@ -37,7 +37,7 @@ class BorrowersController extends BaseController
       ], 400);
     }
     $checkIfItemsCanBeBorrowed = BorrowerService::confirmItemIsInShelf($items);
-    if (count($checkIfItemsCanBeBorrowed) > 0) {
+    if (count($checkIfItemsCanBeBorrowed) === count($items)) {
       $checkDuplicateItemId = array();
       foreach ($checkIfItemsCanBeBorrowed as $getItemId) {
         array_push($checkDuplicateItemId, $getItemId->itemId);

@@ -36,7 +36,7 @@ class AuthorController extends BaseController
   public function createNewAuthor()
   {
     $this->validate($this->request, [
-      'name' => 'required|alpha|max:100',
+      'name' => 'required|regex:/^[a-z ,.\'-]+$/i |max:100'
     ]);
     $name = trim($this->request->input('name'));
     $author = new AuthorService();

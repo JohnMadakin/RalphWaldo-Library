@@ -27,7 +27,7 @@ class BorrowerService {
         $itemData = BorrowerService::formatBorrowedItems($borrowItems['items'], $borrowerSession->id);
         BorrowedItem::insert($itemData);
         $dataToUpdate = BorrowerService:: updateItemStocksCode($borrowItems['items']);
-        ItemStock::whereIn('itemUniqueCode', $dataToUpdate)->update([ 'itemStateId' => 3 ]);
+        ItemStock::whereIn('itemUniqueCode', $dataToUpdate)->update([ 'itemStateId' => 1 ]);
         return $borrowerSession->id;
       });
     }
@@ -65,7 +65,7 @@ class BorrowerService {
   public function getItemsBorrowedByuserId($id)
   {
     if($id){
-      $result = DB::table('borrowers')->select('borrowedItems.itemUniqueCode','borrowers.created_at as dateBorrowed', 'itemStocks.itemCondition', 'items.title','items.isbn', 'authors.name as author')
+      $result = DB::table('borrowers')->select('borrowedItems.itemUniqueCode','borrowers.created_at as dateBorrowed', 'itemStocks.itemCondition', 'items.title','items.isbn', 'itemStocks.itemStateId as itemState','authors.name as author')
       ->join('borrowedItems', 'borrowers.id', '=', 'borrowedItems.borrowerSessionId')
       ->join('itemStocks', 'borrowedItems.itemUniqueCode', '=', 'itemStocks.itemUniqueCode')
       ->join('items', 'itemStocks.itemId', '=', 'items.id')
@@ -133,27 +133,29 @@ class BorrowerService {
   public function returnItemsBorrowed($items)
   {
     if (is_array($items)) {
-      return DB::transaction(function () use ($items) {
+      $returnItems = DB::transaction(function () use ($items) {
+        $notFound = array();
         foreach($items as $item){
-          BorrowedItem::where('itemUniqueCode', $item['itemUniqueCode'])->update([
+          $result = BorrowedItem::where('itemUniqueCode', $item['itemUniqueCode'])->where('returnStateId', '=', null)
+          ->update([
             'finesAccrued' => $item['finesAccrued'],
             'returnStateId' => $item['returnStateId'],
           ]);
-          ItemStock::where('itemUniqueCode', $item['itemUniqueCode'])->update([
+          if(!$result){
+            array_push($notFound, $item['itemUniqueCode']);
+          }
+          $itemStockResult = ItemStock::where('itemUniqueCode', $item['itemUniqueCode'])->update([
           'itemStateId' => $item['returnStateId'],
         ]);
         }
-        return true;
+        if(count($notFound) > 0){
+          trigger_error(json_encode($notFound));
+          return $notFound;
+        }
       });
+      return $returnItems;
+
     }
-    return false;
+    return true;
   }
-}
-{
-	"title": "As you like it",
-    "isbn": "123-42092-2312-9887",
-    "description": "yea",
-    "authorId": 2,
-    "itemTypeId": 2,
-    "categoryId": 1
 }

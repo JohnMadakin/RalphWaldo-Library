@@ -18,6 +18,18 @@ Author
  [x] Should get items by authors
  [x] Should respond with 404 when author not found
 
+Borrower
+ [x] User can borrow items
+ [x] Should fail if request object is invalid
+ [x] User cant borrow items that is not on items list
+ [x] User cant borrow items to users not registered
+ [x] Borrow request should not have duplicate item codes
+ [x] Should not borrow copies of the same item
+ [x] Should get items borrowed by user
+ [x] Should not get items borrowed if user not found
+ [x] Should return items borrowed by user
+ [x] Should fail if item code is invalid
+
 Items
  [x] Should create new item
  [x] Should update item

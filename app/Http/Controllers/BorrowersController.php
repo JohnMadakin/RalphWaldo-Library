@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Http\Services\BorrowerService;
-use App\Models\ItemStock;
 use App\Http\Helpers\ControllerHelpers;
 use Exception;
 

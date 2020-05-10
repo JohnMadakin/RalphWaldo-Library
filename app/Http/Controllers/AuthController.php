@@ -34,8 +34,9 @@ class AuthController extends BaseController {
    * @return mixed
    */
   public function authenticate (){
+    // var_dump( $this->request->input('password'));
     $this->validate($this->request, [
-      'email' => 'sometimes|email|max:255',
+      'email' => 'sometimes|required|email|max:255',
       'userName' => 'sometimes|string|max:255',
       'password' => 'required|min:5',
     ]);

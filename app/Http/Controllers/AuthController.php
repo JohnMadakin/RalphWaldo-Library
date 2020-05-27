@@ -35,7 +35,7 @@ class AuthController extends BaseController {
    */
   public function authenticate (){
     $this->validate($this->request, [
-      'email' => 'sometimes|email|max:255',
+      'email' => 'required|email|max:255',
       'userName' => 'sometimes|string|max:255',
       'password' => 'required|min:5',
     ]);

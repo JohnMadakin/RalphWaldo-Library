@@ -128,6 +128,7 @@ class ItemService
       ->join('itemTypes', 'items.itemTypeId', '=', 'itemTypes.id')
       ->join('categories', 'items.categoryId', '=', 'categories.id')
       ->join('authors', 'items.authorId', '=', 'authors.id')
+      ->where('items.deleted_at', NULL)
       ->when($search, function ($query, $search) {
         return $query->where('title', 'ilike', '%' . $search . '%')
           ->orWhere('authors.name', 'ilike', '%' . $search . '%')

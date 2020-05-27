@@ -155,7 +155,7 @@ class ItemsController extends BaseController
    */
   public function getItems()
   {
-    $pageSize = $this->request->query('pageSize') ?? 10;
+    $pageSize = $this->request->query('pageSize') ?? 30;
     $page = $this->request->query('page') ?? 1;
     $sortBy = $this->request->query('sort') ?? 'title_asc';
     $search = $this->request->has('search') ? $this->request->query('search') : null;

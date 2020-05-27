@@ -26,7 +26,7 @@ class AuthorService
    * get authors from the DB
    * 
    * @param string $author 
-   * @return void
+   * @return result
    */
   public function getAuthors( $page, $pageSize, $author, $sortBy)
   {
@@ -41,6 +41,20 @@ class AuthorService
 
       return $result;
   }
+
+  /**
+   * get authors from the DB
+   * 
+   * @return result
+   */
+  public function getAllAuthors()
+  {
+
+    $result = DB::table('authors')->get();
+
+    return $result;
+  }
+
 
     /**
    * get books by authors from the DB

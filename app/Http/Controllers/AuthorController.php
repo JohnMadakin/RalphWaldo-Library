@@ -81,6 +81,13 @@ class AuthorController extends BaseController
     }
     $author = new AuthorService();
     try {
+      if($pageSize == 'all'){
+        $result = $author->getAllAuthors();
+        return response()->json([
+          'success' => true,
+          'authors' => $result
+        ], 200);
+      }
       $result = $author->getAuthors($page, $pageSize, $authorQuery, $sort);
       if ($result) {
         return response()->json([

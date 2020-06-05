@@ -65,11 +65,12 @@ class BorrowerService {
   public function getItemsBorrowedByuserId($id)
   {
     if($id){
-      $result = DB::table('borrowers')->select('libraryCardId as userId','borrowedItems.itemUniqueCode','borrowers.created_at as dateBorrowed', 'itemStocks.itemCondition', 'items.title','items.isbn', 'itemStocks.itemStateId as itemState','authors.name as author')
+      $result = DB::table('borrowers')->select('libraryCardId as userId','borrowedItems.itemUniqueCode','borrowers.created_at as dateBorrowed', 'itemStocks.itemCondition', 'items.title','items.isbn', 'itemStocks.itemStateId as itemState','authors.name as author', 'itemStates.name as itemStateName')
       ->join('borrowedItems', 'borrowers.id', '=', 'borrowedItems.borrowerSessionId')
       ->join('itemStocks', 'borrowedItems.itemUniqueCode', '=', 'itemStocks.itemUniqueCode')
       ->join('items', 'itemStocks.itemId', '=', 'items.id')
       ->join('authors', 'items.authorId', '=', 'authors.id')
+      ->join('itemStates', 'itemStates.id', '=', 'itemStocks.itemStateId')
       ->where( 'borrowers.libraryCardId', $id)
       ->get();
       return $result;
